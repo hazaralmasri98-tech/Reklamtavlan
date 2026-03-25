@@ -1,81 +1,92 @@
 # Reklamtavlan
 
-Detta projekt implementerar en enkel reklamtavla med en Arduino Uno och en 16x2 LCD-display.
+## Beskrivning
 
-## Funktioner
+Detta projekt simulerar en reklamtavla som visar olika reklammeddelanden på en LCD-skärm (16x2).
+Olika kunder har olika krav på hur deras meddelanden ska visas, samt olika vikt (hur ofta de visas).
 
-- Slumpmässigt val av kund baserat på vikt (weighted random)
-- Samma kund visas aldrig två gånger i rad
-- Flera meddelanden per kund
-- Speciallogik för Petter:
-  - Jämn minut → ett meddelande
-  - Udda minut → ett annat meddelande
-- Text-effekter:
-  - NORMAL
-  - BLINK
-  - SCROLL
+Projektet är implementerat i C++ med Arduino och körs på riktig hårdvara.
 
-## Projektstruktur
+---
 
-- `models.h`  
-  Definierar datastrukturer (Customer, Message, Effect)
+## Funktionalitet
 
-- `ad_engine.h / ad_engine.cpp`  
-  Hanterar val av kund och meddelande
+* Slumpar fram en kund baserat på vikt (betalning)
+* Samma kund visas aldrig två gånger i rad
+* Varje kund har egna meddelanden
+* Stöd för olika effekter:
 
-- `effects.h / effects.cpp`  
-  Implementerar text-effekter (scroll, blink)
+  * Normal text
+  * Scrollande text
+  * Blinkande text
+* Specialfall för "Svarte Petter":
 
-- `main.cpp`  
-  Startar systemet och uppdaterar displayen
+  * Olika meddelande beroende på jämn/ojämn minut
+
+---
+
+## Teknik
+
+* Arduino Uno
+* LCD 16x2 (LiquidCrystal)
+* C++
+
+---
 
 ## Hårdvara
 
-- Arduino Uno
-- LCD 16x2
+Projektet har testats på riktig hårdvara.
 
-## Simulation
+Koppling:
 
-Projektet kan simuleras i Wokwi med samma pin-konfiguration som anges ovan.
+* RS → pin 12
+* E → pin 11
+* D4 → pin 4
+* D5 → pin 5
+* D6 → pin 6
+* D7 → pin 7
+* VSS → GND
+* VDD → 5V
+* RW → GND
+* V0 → GND (kontrast)
+* A → 5V (bakgrundsbelysning)
+* K → GND
 
-### Kopplingar
-
-- RS → 12  
-- E  → 11  
-- D4 → 4  
-- D5 → 5  
-- D6 → 6  
-- D7 → 7  
-
-## Hur det fungerar
-
-Systemet visar en reklam i taget under en viss tid (t.ex. 20 sekunder).  
-När tiden är slut väljs en ny kund slumpmässigt baserat på deras vikt.
-
-Därefter väljs ett meddelande:
-- Antingen slumpmässigt
-- Eller baserat på tid (för Petter)
-
-Meddelandet visas på LCD:n med en tilldelad effekt:
-- NORMAL → statisk text
-- BLINK → texten blinkar
-- SCROLL → texten scrollar om den är för lång
-
-## Bygg och körning
-
-Projektet är byggt med:
-- Visual Studio Code
-- PlatformIO
+---
 
 ## Designval
 
-- Koden är uppdelad i moduler för bättre struktur och läsbarhet
-- Logiken är separerad från hårdvaran
-- Effekter hanteras i en egen modul
+Projektet är uppdelat i flera moduler:
 
-## Möjliga förbättringar
+* `models` – datatyper (Customer, Message)
+* `ad_engine` – logik för att välja kund och meddelande
+* `effects` – hantering av visuella effekter
 
-- Lägga till fler effekter
-- Göra systemet datadrivet (t.ex. läsa från fil eller EEPROM)
-- Visa kundens namn tillsammans med reklam
-- Använda knappar för interaktion
+Denna struktur gör koden mer läsbar, återanvändbar och lätt att underhålla.
+
+Slumpning baseras på vikt för att simulera olika betalnivåer mellan kunder.
+
+---
+
+## Git-historik
+
+Projektet har utvecklats stegvis med flera commits som visar utvecklingen från enkel implementation till en mer strukturerad lösning.
+
+---
+
+## Simulation
+
+En enkel simulering kan göras i Wokwi vid behov.
+
+---
+
+## Slutsats
+
+Projektet uppfyller alla krav genom att:
+
+* Hantera flera kunder med olika krav
+* Visa text på olika sätt (effekter)
+* Använda strukturerad och modulär kod
+* Testas på riktig hårdvara
+
+

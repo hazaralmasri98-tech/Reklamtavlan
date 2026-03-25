@@ -14,17 +14,20 @@ static const unsigned long SLOT_TIME = 20000UL;
 
 static unsigned long slotStart = 0;
 
+// Start next advertisement
 void startNextAd() {
   const Customer* c = pickNextCustomer();
   const Message* m = pickMessage(c);
 
   lcd.clear();
   effectsStart(m->text, m->effect);
+
   slotStart = millis();
 }
 
 void setup() {
   lcd.begin(LCD_COLS, LCD_ROWS);
+
   initCustomers();
   effectsBegin();
 
@@ -37,9 +40,11 @@ void setup() {
 }
 
 void loop() {
+  // Change ad every 20 seconds
   if (millis() - slotStart >= SLOT_TIME) {
     startNextAd();
   }
 
+  // Update effects (scroll, blink)
   effectsUpdate();
 }
