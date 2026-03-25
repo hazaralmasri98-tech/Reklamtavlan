@@ -1,4 +1,4 @@
-# Reklamtavlan
+# Reklamtavlan – Arduino LCD Advertising Simulator
 
 ## Beskrivning
 
@@ -73,6 +73,12 @@ Slumpning baseras på vikt för att simulera olika betalnivåer mellan kunder.
 Projektet har utvecklats stegvis med flera commits som visar utvecklingen från enkel implementation till en mer strukturerad lösning.
 
 ---
+
+## Installation
+1. Klona repot
+2. Öppna i Arduino IDE
+3. Ladda upp till Arduino Uno
+
 
 ## Simulation
 
