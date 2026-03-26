@@ -3,7 +3,7 @@
 ## Beskrivning
 
 Detta projekt simulerar en reklamtavla som visar olika reklammeddelanden på en LCD-skärm (16x2).
-Olika kunder har olika krav på hur deras meddelanden ska visas, samt olika vikt (hur ofta de visas).
+Olika kunder har olika krav på hur deras meddelanden ska visas samt olika vikt (hur ofta de visas).
 
 Projektet är implementerat i **ren C/C++ för AVR** och körs på riktig hårdvara.
 
@@ -19,7 +19,7 @@ Projektet är implementerat i **ren C/C++ för AVR** och körs på riktig hårdv
   * Normal text
   * Scrollande text
   * Blinkande text
-* Specialfall för "Svarte Petter":
+* Specialfall för *Svarte Petter*:
 
   * Olika meddelande beroende på jämn/ojämn minut
 
@@ -56,31 +56,26 @@ Koppling:
 
 ## Designval
 
-
-Projektet är uppdelat i flera moduler:
+Projektet är uppdelat i flera moduler för att separera ansvar:
 
 * `models` – datatyper (Customer, Message)
 * `ad_engine` – logik för att välja kund och meddelande
 * `effects` – hantering av visuella effekter
 * `lcd_driver` – låg-nivå styrning av LCD
-* `timer` – tidsfunktionalitet med interrupts
+* `timer` – tidsfunktionalitet med AVR-timer och interrupts
 * `rng` – pseudo-slumptalsgenerator
 
-Denna struktur gör koden mer läsbar, återanvändbar och lätt att underhålla.
-
-Slumpning baseras på vikt för att simulera olika betalnivåer mellan kunder.
+Denna struktur gör koden mer läsbar, modulär och lätt att vidareutveckla.
 
 ---
 
 ## Implementation
 
-Projektet är implementerat i ren C/C++ för AVR och använder inte Arduino-bibliotek.
+Projektet använder inte Arduino-bibliotek utan implementerar funktionalitet direkt på hårdvarunivå:
 
-Följande delar har implementerats direkt:
-
-* timerhantering med AVR-timer och interrupts
-* enkel pseudo-slumpgenerator
-* LCD-styrning i 4-bitarsläge via AVR-portar (PORTB och PORTD)
+* Timer med AVR-register och interrupts (ersätter `millis()`)
+* Egen pseudo-slumpgenerator
+* LCD-styrning i 4-bitarsläge via PORTB och PORTD
 
 ---
 
@@ -95,11 +90,11 @@ Följande delar har implementerats direkt:
 
 ## Simulation
 
-Simuleringen använder den kompilerade HEX-filen från AVR-implementationen.
+Projektet kan även testas online med Wokwi:
 
-projektet kan även testas online med Wokwi:
-öppnna :
-https://wokwi.com/projects/459555513961545729
+[▶ Öppna simuleringen] https://wokwi.com/projects/459555513961545729
+
+Simuleringen använder den kompilerade HEX-filen från AVR-implementationen.
 
 ---
 
@@ -107,8 +102,8 @@ https://wokwi.com/projects/459555513961545729
 
 Projektet uppfyller alla krav genom att:
 
-* Hantera flera kunder med olika krav
-* Visa text på olika sätt (effekter)
-* Använda strukturerad och modulär kod
+* Hantera flera kunder med olika regler
+* Visa text med olika effekter
+* Använda modulär och strukturerad kod
 * Implementera hårdvarunära lösningar i AVR
-* Testas på riktig hårdvara
+* Testas både i simulering och på riktig hårdvara
