@@ -97,6 +97,9 @@ Projektet kan även testas online med Wokwi:
 Simuleringen använder den kompilerade HEX-filen från AVR-implementationen.
 
 ---
+## Firmware
+
+Den kompilerade HEX-filen (`firmware.hex`) finns också i repot.
 
 ## Slutsats
 
