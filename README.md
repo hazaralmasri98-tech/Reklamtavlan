@@ -95,7 +95,11 @@ Följande delar har implementerats direkt:
 
 ## Simulation
 
-En enkel simulering kan göras i Wokwi vid behov.
+Simuleringen använder den kompilerade HEX-filen från AVR-implementationen.
+
+projektet kan även testas online med Wokwi:
+öppnna :
+https://wokwi.com/projects/459555513961545729
 
 ---
 
