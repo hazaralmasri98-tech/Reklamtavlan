@@ -1,5 +1,6 @@
 #include "ad_engine.h"
-#include <Arduino.h>
+#include "rng.h"
+#include "timer.h"
 
 // -------- Messages --------
 
@@ -29,40 +30,39 @@ static const Message iotMsgs[] = {
 static Customer customers[] = {
   {"Harry",   5000, harryMsgs,   3, false},
   {"Farmor",  3000, farmorMsgs,  2, false},
-  {"Petter",  1500, nullptr,     0, true },
+  {"Petter",  1500, 0,           0, true },
   {"Langben", 4000, langbenMsgs, 2, false},
   {"IOT",     1000, iotMsgs,     1, false}
 };
 
 static const uint8_t CUSTOMER_COUNT = sizeof(customers) / sizeof(customers[0]);
-
 static int lastCustomer = -1;
 
 static bool isEvenMinute() {
-  return ((millis() / 60000UL) % 2UL) == 0;
+  return ((millis_avr() / 60000UL) % 2UL) == 0;
 }
 
-// -------- API --------
-
 void initCustomers() {
-  randomSeed(analogRead(A0));
+  // Seed with a fixed value for now.
+  // Later we can improve this if needed.
+  rng_seed(12345UL);
 }
 
 const Customer* pickNextCustomer() {
-  long total = 0;
+  uint32_t total = 0;
 
-  for (int i = 0; i < CUSTOMER_COUNT; i++) {
-    if (i == lastCustomer) continue;
-    total += customers[i].weight;
+  for (uint8_t i = 0; i < CUSTOMER_COUNT; i++) {
+    if ((int)i == lastCustomer) continue;
+    total += (uint32_t)customers[i].weight;
   }
 
-  long r = random(total);
-  long sum = 0;
+  uint32_t r = rng_range(total);
+  uint32_t sum = 0;
 
-  for (int i = 0; i < CUSTOMER_COUNT; i++) {
-    if (i == lastCustomer) continue;
-    sum += customers[i].weight;
+  for (uint8_t i = 0; i < CUSTOMER_COUNT; i++) {
+    if ((int)i == lastCustomer) continue;
 
+    sum += (uint32_t)customers[i].weight;
     if (r < sum) {
       lastCustomer = i;
       return &customers[i];
@@ -77,6 +77,6 @@ const Message* pickMessage(const Customer* c) {
     return isEvenMinute() ? &petterEven : &petterOdd;
   }
 
-  uint8_t i = random(c->msgCount);
+  uint32_t i = rng_range(c->msgCount);
   return &c->msgs[i];
 }

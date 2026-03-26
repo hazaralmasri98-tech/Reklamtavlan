@@ -26,7 +26,10 @@ Projektet är implementerat i C++ med Arduino och körs på riktig hårdvara.
 ---
 
 ## Teknik
-
+git status
+git add README.md
+git commit -m "Update README with project description"
+git push
 * Arduino Uno
 * LCD 16x2 (LiquidCrystal)
 * C++
